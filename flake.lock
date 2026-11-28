@@ -3,11 +3,11 @@
     "gliver": {
       "flake": false,
       "locked": {
-        "lastModified": 1794480875,
-        "narHash": "sha256-V2nIDBuv6aF3YqK3CPoBYPa2ImEerwrswQ7a/vdySqo=",
+        "lastModified": 1795836601,
+        "narHash": "sha256-NXJmT4i5nLj369ASHZOfBz+89ktWni7yuzXEL0gmVfk=",
         "ref": "master",
-        "rev": "ff31171b9c1e89fe2a602ec9d8f603d274adc549",
-        "revCount": 365,
+        "rev": "921015624c679f4bbc25d8f0a3c216f95cb58834",
+        "revCount": 418,
         "type": "git",
         "url": "https://codeberg.org/ebeem/gliver.git"
       },
