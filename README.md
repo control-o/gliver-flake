@@ -8,10 +8,11 @@ If you set up your flake inputs a little something like this you should be able 
 inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     gliver = {
-      url = "git+https://codeberg.org/ebeem/gliver.git?ref=master";
-      flake = false;
+        url = "git+https://codeberg.org/ebeem/gliver.git?ref=master";
+        flake = false;
     };
     gliver-flake = {
+        url = "github:control-o/gliver-flake";
         inputs = {
             nixpkgs.follows = "nixpkgs";
             gliver.follows = "gliver";
@@ -52,9 +53,6 @@ The REPL socket should be located at your equivalent of `$XDG_STATE_HOME/gliver/
 ### Keybinds
 
 There are [three provided sets of keybindings](https://codeberg.org/ebeem/gliver/src/branch/master/gliver/contrib/keybindings) included with gliver. As of writing, the sway ones are kind of jank but provide a good basis for workspace handling.
-
-If you change keybinds within your config, remember to add `(keybinding-sync!)` afterwards.
-
 
 ### Sway-like workspaces
 
@@ -101,17 +99,12 @@ This is a little jank, but it works, frankly.
 
 ### Input handling for laptops with `channel`
 
-If you are using a laptop; you may wish to use `pkgs.river-channel` from nixpkgs to set touchpad options. Refer to [this codeberg issue](https://codeberg.org/ebeem/gliver/issues/43) for a means to allow channel to completely take over managing your input, should you wish to use it, while this issue is not yet closed.
+If you are using a laptop; you may wish to use `pkgs.river-channel` from nixpkgs to set touchpad options.
 
-Here is a relevant section of configuration for starting channel with gliver and preventing gliver from running its keybind reset hooks. The prior section is somewhat relevant here!
+Here is a relevant section of configuration for starting channel with gliver while also preventing gliver from managing the keyboard layout and options by setting `*keyboard-layouts*` to `#f`. The prior section is somewhat relevant here!
 
 ```scheme
-(let* ((current-funcs (gliver-hook-functions *config-loaded-hook*))
-       (cleaned (filter (lambda (i)
-                          (not (string=? (symbol->string (car (cdr i)))
-                                         "keyboard-on-config-loaded")))
-                        current-funcs)))
-  (set-gliver-hook-functions! *config-loaded-hook* cleaned))
+(set! *keyboard-layouts* #f)
 
 (when (not (defined? 'setup-done))
   (exec "channel")
